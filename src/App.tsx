@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import {
-  createTheme, Theme, createStyles, makeStyles, ThemeProvider,
+  unstable_createMuiStrictModeTheme as createTheme, Theme, createStyles, makeStyles, ThemeProvider,
 } from '@material-ui/core/styles';
 import { Container, CssBaseline } from '@material-ui/core';
 

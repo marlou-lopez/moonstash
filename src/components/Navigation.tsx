@@ -14,6 +14,7 @@ import {
   ListItemText,
   Typography,
   Grid,
+  Hidden,
 } from '@material-ui/core';
 import {
   createStyles, makeStyles, Theme, useTheme,
@@ -32,6 +33,8 @@ interface NavigationProps {
   toggleDarkMode: () => void;
 }
 
+const drawerWidth = 240;
+
 const useStyles = makeStyles((theme: Theme) => createStyles({
   appBar: {
     background: theme.palette.background.default,
@@ -40,10 +43,13 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+
   },
   appBarOpen: {
-    marginLeft: 240,
-    width: 'calc(100% - 240px)',
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -64,12 +70,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     ...theme.mixins.toolbar,
   },
   drawer: {
-    width: 240,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
+    width: drawerWidth,
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
   },
   drawerPaperOpen: {
-    width: 240,
+    width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -113,7 +121,7 @@ const RouteMap = {
 const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
   const classes = useStyles();
   const location = useLocation();
-  const { palette: { type } } = useTheme();
+  const { palette: { type }, direction } = useTheme();
 
   const [openDrawer, setOpenDrawer] = useState(true);
 
@@ -124,6 +132,37 @@ const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
   const handleCloseDrawer = () => {
     setOpenDrawer(false);
   };
+
+  const drawerContent = (
+    <>
+      <div className={classes.toolbar}>
+        <IconButton onClick={handleCloseDrawer}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </div>
+      <Divider />
+      <Grid container justifyContent="center">
+        <IconButton onClick={() => toggleDarkMode()}>
+          {(type === 'dark') ? <NightsStayIcon /> : <WbSunnyIcon />}
+        </IconButton>
+      </Grid>
+      <Divider />
+      <List component="nav">
+        {Object.values(RouteMap).map(({ title, path, icon }) => (
+          <ListItem
+            button
+            component={RouterLink}
+            to={path}
+            key={title}
+            selected={path === location.pathname}
+          >
+            <ListItemIcon>{icon}</ListItemIcon>
+            <ListItemText primary={title} />
+          </ListItem>
+        ))}
+      </List>
+    </>
+  );
 
   return (
     <>
@@ -152,47 +191,41 @@ const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
           </Link>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        open={openDrawer}
-        className={clsx(classes.drawer, {
-          [classes.drawerPaperClose]: !openDrawer,
-          [classes.drawerPaperOpen]: openDrawer,
-        })}
-        classes={{
-          paper: clsx(classes.drawer, {
+      <Hidden smUp>
+        <Drawer
+          variant="temporary"
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          open={openDrawer}
+          anchor={direction === 'rtl' ? 'right' : 'left'}
+          className={clsx(classes.drawer)}
+          classes={{
+            paper: clsx(classes.drawer),
+          }}
+          onClose={handleCloseDrawer}
+        >
+          {drawerContent}
+        </Drawer>
+      </Hidden>
+      <Hidden xsDown implementation="css">
+        <Drawer
+          variant="permanent"
+          open={openDrawer}
+          className={clsx(classes.drawer, {
             [classes.drawerPaperClose]: !openDrawer,
             [classes.drawerPaperOpen]: openDrawer,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleCloseDrawer}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <Grid container justifyContent="center">
-          <IconButton onClick={() => toggleDarkMode()}>
-            {(type === 'dark') ? <NightsStayIcon /> : <WbSunnyIcon />}
-          </IconButton>
-        </Grid>
-        <Divider />
-        <List component="nav">
-          {Object.values(RouteMap).map(({ title, path, icon }) => (
-            <ListItem
-              button
-              component={RouterLink}
-              to={path}
-              key={title}
-              selected={path === location.pathname}
-            >
-              <ListItemIcon>{icon}</ListItemIcon>
-              <ListItemText primary={title} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
+          })}
+          classes={{
+            paper: clsx(classes.drawer, {
+              [classes.drawerPaperClose]: !openDrawer,
+              [classes.drawerPaperOpen]: openDrawer,
+            }),
+          }}
+        >
+          {drawerContent}
+        </Drawer>
+      </Hidden>
     </>
   );
 };
