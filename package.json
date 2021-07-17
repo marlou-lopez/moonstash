@@ -25,7 +25,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-app-rewired start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -51,12 +51,15 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
+    "babel-plugin-transform-imports": "^2.0.0",
+    "customize-cra": "^1.0.0",
     "eslint": "^7.30.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "msw": "^0.31.0"
+    "msw": "^0.31.0",
+    "react-app-rewired": "^2.1.8"
   }
 }

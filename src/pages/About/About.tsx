@@ -1,5 +1,4 @@
-
-const About: React.FC  = ()=> (
+const About: React.FC = () => (
   <h1>About</h1>
 );
 

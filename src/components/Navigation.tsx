@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
+
 import {
   AppBar,
   Toolbar,
@@ -13,11 +15,9 @@ import {
   Typography,
   Grid,
 } from '@material-ui/core';
-
 import {
   createStyles, makeStyles, Theme, useTheme,
 } from '@material-ui/core/styles';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import HomeIcon from '@material-ui/icons/Home';
@@ -26,75 +26,71 @@ import InfoIcon from '@material-ui/icons/Info';
 import NightsStayIcon from '@material-ui/icons/NightsStay';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 
-import { Link as RouterLink, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 
 interface NavigationProps {
   toggleDarkMode: () => void;
 }
 
-const useStyles = makeStyles((theme: Theme) => {
-  console.log(theme);
-  return createStyles({
-    appBar: {
-      background: theme.palette.background.default,
-      zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarOpen: {
-      marginLeft: 240,
-      width: 'calc(100% - 240px)',
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    menuButton: {
-      marginRight: 36,
-    },
-    menuButtonHidden: {
-      display: 'none',
-    },
-    toolbar: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
-    },
-    drawer: {
-      width: 240,
-      flexShrink: 0,
-      whiteSpace: 'nowrap',
-    },
-    drawerPaperOpen: {
-      width: 240,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    drawerPaperClose: {
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      overflowX: 'hidden',
-      width: theme.spacing(7) + 1,
-    },
-    toolbarIcon: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      padding: '0 8px',
-      ...theme.mixins.toolbar,
-    },
-  });
-});
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  appBar: {
+    background: theme.palette.background.default,
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarOpen: {
+    marginLeft: 240,
+    width: 'calc(100% - 240px)',
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: 36,
+  },
+  menuButtonHidden: {
+    display: 'none',
+  },
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+  },
+  drawer: {
+    width: 240,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+  },
+  drawerPaperOpen: {
+    width: 240,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerPaperClose: {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: theme.spacing(7) + 1,
+  },
+  toolbarIcon: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+  },
+}));
 
 const RouteMap = {
   Home: {
@@ -183,7 +179,7 @@ const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
         </Grid>
         <Divider />
         <List component="nav">
-          {Object.values(RouteMap).map(({ title, path, icon }, index) => (
+          {Object.values(RouteMap).map(({ title, path, icon }) => (
             <ListItem
               button
               component={RouterLink}

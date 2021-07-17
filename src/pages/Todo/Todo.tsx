@@ -1,7 +1,7 @@
-import {
-  Container, createStyles, Grid, makeStyles, Paper, Theme,
-} from '@material-ui/core';
 import { useQuery } from 'react-query';
+
+import { Container, Grid, Paper } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const getTodos = async () => {
   const response = await fetch('/todos');

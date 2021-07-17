@@ -1,9 +1,12 @@
-import {
-  Container, createTheme, Theme, createStyles, CssBaseline, makeStyles, ThemeProvider,
-} from '@material-ui/core';
+import { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { useState } from 'react';
+
+import {
+  createTheme, Theme, createStyles, makeStyles, ThemeProvider,
+} from '@material-ui/core/styles';
+import { Container, CssBaseline } from '@material-ui/core';
+
 import Todo from './pages/Todo/Todo';
 import About from './pages/About/About';
 import Navigation from './components/Navigation';
