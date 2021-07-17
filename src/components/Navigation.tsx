@@ -1,7 +1,22 @@
 import React, { useState } from 'react';
 import {
-  AppBar, Toolbar, Drawer, Divider, createStyles, makeStyles, Theme, Link, IconButton, List, ListItem, ListItemIcon, ListItemText, Typography, Grid, useTheme
+  AppBar,
+  Toolbar,
+  Drawer,
+  Divider,
+  Link,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  Grid,
 } from '@material-ui/core';
+
+import {
+  createStyles, makeStyles, Theme, useTheme,
+} from '@material-ui/core/styles';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -19,7 +34,7 @@ interface NavigationProps {
 }
 
 const useStyles = makeStyles((theme: Theme) => {
-  console.log(theme)
+  console.log(theme);
   return createStyles({
     appBar: {
       background: theme.palette.background.default,
@@ -78,27 +93,26 @@ const useStyles = makeStyles((theme: Theme) => {
       padding: '0 8px',
       ...theme.mixins.toolbar,
     },
-  })
+  });
 });
 
 const RouteMap = {
   Home: {
     title: 'Home',
     path: '/',
-    icon: <HomeIcon color="primary" />
+    icon: <HomeIcon color="primary" />,
   },
   Todo: {
     title: 'Todo',
     path: '/todo',
-    icon: <ListAltIcon color="primary" />
+    icon: <ListAltIcon color="primary" />,
   },
   About: {
     title: 'About',
     path: '/about',
-    icon: <InfoIcon color="primary" />
-  }
-}
-
+    icon: <InfoIcon color="primary" />,
+  },
+};
 
 const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
   const classes = useStyles();
@@ -107,20 +121,22 @@ const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
 
   const [openDrawer, setOpenDrawer] = useState(true);
 
-
   const handleOpenDrawer = () => {
-    setOpenDrawer(true)
-  }
+    setOpenDrawer(true);
+  };
 
   const handleCloseDrawer = () => {
-    setOpenDrawer(false)
-  }
+    setOpenDrawer(false);
+  };
 
   return (
-    <React.Fragment>
-      <AppBar position="fixed" className={clsx(classes.appBar, {
-        [classes.appBarOpen]: openDrawer
-      })}>
+    <>
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarOpen]: openDrawer,
+        })}
+      >
         <Toolbar>
           <IconButton
             edge="start"
@@ -128,7 +144,7 @@ const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
             aria-label="open drawer"
             onClick={handleOpenDrawer}
             className={clsx(classes.menuButton, {
-              [classes.menuButtonHidden]: openDrawer
+              [classes.menuButtonHidden]: openDrawer,
             })}
           >
             <MenuIcon />
@@ -145,14 +161,13 @@ const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
         open={openDrawer}
         className={clsx(classes.drawer, {
           [classes.drawerPaperClose]: !openDrawer,
-          [classes.drawerPaperOpen]: openDrawer
-        })
-        }
+          [classes.drawerPaperOpen]: openDrawer,
+        })}
         classes={{
           paper: clsx(classes.drawer, {
             [classes.drawerPaperClose]: !openDrawer,
-            [classes.drawerPaperOpen]: openDrawer
-          })
+            [classes.drawerPaperOpen]: openDrawer,
+          }),
         }}
       >
         <div className={classes.toolbar}>
@@ -168,24 +183,22 @@ const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
         </Grid>
         <Divider />
         <List component="nav">
-          {Object.values(RouteMap).map(({ title, path, icon }, index) => {
-            return (
-              <ListItem
-                button
-                component={RouterLink}
-                to={path}
-                key={title}
-                selected={path === location.pathname}
-              >
-                <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText primary={title} />
-              </ListItem>
-            )
-          })}
+          {Object.values(RouteMap).map(({ title, path, icon }, index) => (
+            <ListItem
+              button
+              component={RouterLink}
+              to={path}
+              key={title}
+              selected={path === location.pathname}
+            >
+              <ListItemIcon>{icon}</ListItemIcon>
+              <ListItemText primary={title} />
+            </ListItem>
+          ))}
         </List>
       </Drawer>
-    </React.Fragment>
-  )
+    </>
+  );
 };
 
 export default Navigation;

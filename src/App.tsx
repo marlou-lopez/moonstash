@@ -1,70 +1,69 @@
-import { Container, createTheme, Theme, createStyles, CssBaseline, makeStyles, ThemeProvider } from '@material-ui/core';
+import {
+  Container, createTheme, Theme, createStyles, CssBaseline, makeStyles, ThemeProvider,
+} from '@material-ui/core';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { useState } from 'react';
 import Todo from './pages/Todo/Todo';
 import About from './pages/About/About';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import Navigation from './components/Navigation';
-import { useState } from 'react';
 
 const queryClient = new QueryClient();
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    main: {
-      display: 'flex'
-    },
-    toolbar: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
-    },
-    content: {
-      flexGrow: 1
-    },
-  })
-})
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  main: {
+    display: 'flex',
+  },
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+  },
+  content: {
+    flexGrow: 1,
+  },
+}));
 
 const themeObject = {
   palette: {
     primary: {
       main: '#3E96C8',
-      dark: '#2F7AA4'
+      dark: '#2F7AA4',
     },
     secondary: {
       main: '#C8703E',
-      dark: '#A4592F'
+      dark: '#A4592F',
     },
-    type: 'light'
-  }
-}
+    type: 'light',
+  },
+};
 
 const useDarkMode = () => {
   const [theme, setTheme] = useState<any>(themeObject);
 
   const {
-    palette: { type }
+    palette: { type },
   } = theme;
   const toggleDarkMode = () => {
     const updatedTheme = {
       ...theme,
       palette: {
         ...theme.palette,
-        type: type === "light" ? "dark" : "light"
-      }
+        type: type === 'light' ? 'dark' : 'light',
+      },
     };
     setTheme(updatedTheme);
   };
   return [theme, toggleDarkMode];
 };
 
-function App() {
+const App: React.FC = () => {
   const classes = useStyles();
   const [theme, toggleDarkMode] = useDarkMode();
-  console.log('called')
-  const themeConfig = createTheme(theme)
+  const themeConfig = createTheme(theme);
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -87,6 +86,6 @@ function App() {
       </BrowserRouter>
     </QueryClientProvider>
   );
-}
+};
 
 export default App;
