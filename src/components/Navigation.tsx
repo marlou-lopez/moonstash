@@ -147,7 +147,7 @@ const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
           </IconButton>
           <Link underline="none" component={RouterLink} to={RouteMap.Home.path}>
             <Typography variant="h5" color="primary">
-              Go Blank
+              Moonstash
             </Typography>
           </Link>
         </Toolbar>
