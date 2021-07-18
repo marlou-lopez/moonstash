@@ -158,6 +158,7 @@ const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
             to={path}
             key={title}
             selected={path === location.pathname}
+            onClick={() => handleCloseDrawer()}
           >
             <ListItemIcon>{icon}</ListItemIcon>
             <ListItemText primary={title} />
