@@ -12,7 +12,6 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Typography,
   Grid,
   Hidden,
 } from '@material-ui/core';
@@ -26,8 +25,8 @@ import ListAltIcon from '@material-ui/icons/ListAlt';
 import InfoIcon from '@material-ui/icons/Info';
 import NightsStayIcon from '@material-ui/icons/NightsStay';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
-
 import clsx from 'clsx';
+import MoonstashLogo from '../assets/moonstash.png';
 
 interface NavigationProps {
   toggleDarkMode: () => void;
@@ -100,6 +99,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     justifyContent: 'flex-end',
     padding: '0 8px',
     ...theme.mixins.toolbar,
+  },
+  logo: {
+    width: 140,
   },
 }));
 
@@ -189,9 +191,7 @@ const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
             <MenuIcon />
           </IconButton>
           <Link underline="none" component={RouterLink} to={RouteMap.Home.path}>
-            <Typography variant="h5" color="primary">
-              Moonstash
-            </Typography>
+            <img className={classes.logo} src={MoonstashLogo} alt="moonstash.png" />
           </Link>
         </Toolbar>
       </AppBar>
