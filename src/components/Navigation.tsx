@@ -56,7 +56,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     }),
   },
   menuButton: {
-    marginRight: 36,
+    marginRight: 16,
+    [theme.breakpoints.up('sm')]: {
+      marginRight: 20,
+    },
   },
   menuButtonHidden: {
     display: 'none',
@@ -123,7 +126,7 @@ const Navigation: React.FC<NavigationProps> = ({ toggleDarkMode }) => {
   const location = useLocation();
   const { palette: { type }, direction } = useTheme();
 
-  const [openDrawer, setOpenDrawer] = useState(true);
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   const handleOpenDrawer = () => {
     setOpenDrawer(true);
