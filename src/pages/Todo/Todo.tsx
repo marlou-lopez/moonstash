@@ -1,11 +1,16 @@
 // import { useQuery } from 'react-query';
 
 import {
-  Container, Grid, Hidden, Paper, Box, Divider,
+  Container, Grid, Hidden, Paper, Box, Divider, Modal, Fade, useMediaQuery,
 } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import {
+  createStyles, makeStyles, Theme, useTheme,
+} from '@material-ui/core/styles';
+import { useState } from 'react';
 import TodoForm from './Form';
 import TodoList from './List';
+import Preview from './Preview';
+import { TodoProvider, useTodo } from './Provider';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   container: {
@@ -18,11 +23,33 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   divider: {
     margin: theme.spacing(2, 0),
   },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    width: '500px',
+    minHeight: '600px',
+    margin: theme.spacing(0, 2),
+  },
 }));
 
 const Todo: React.FC = () => {
   const classes = useStyles();
-  console.log('ssss');
+  const { state, dispatch } = useTodo();
+  const isMedScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+
+  const handleCloseModal = () => {
+    dispatch({
+      type: 'close',
+    });
+    dispatch({
+      type: 'unselect',
+    });
+  };
+  console.log('modal: ', isMedScreen && state.openModal);
+
   return (
     <>
       <h1>Test</h1>
@@ -37,9 +64,20 @@ const Todo: React.FC = () => {
           </Grid>
           <Hidden smDown>
             <Grid item md={6}>
-              y
+              <Preview />
             </Grid>
           </Hidden>
+          <Modal
+            open={isMedScreen && state.openModal}
+            onClose={handleCloseModal}
+            className={classes.modal}
+          >
+            <Fade in={isMedScreen && state.openModal}>
+              <Paper className={classes.paper}>
+                <Preview />
+              </Paper>
+            </Fade>
+          </Modal>
         </Grid>
       </Paper>
     </>

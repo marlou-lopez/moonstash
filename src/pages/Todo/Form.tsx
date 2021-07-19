@@ -1,7 +1,7 @@
 import { TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { ITodoItem } from './Item';
+import { ITodoItem } from './types';
 
 function getRandomInt() {
   return Math.floor(Math.random() * (800) + 200);
@@ -16,7 +16,6 @@ const postTodo = async (todo: ITodoItem) => {
     },
   });
   const data = await response.json();
-  console.log('post: ', data);
   return data;
 };
 
@@ -41,9 +40,6 @@ const Form: React.FC = () => {
       if (context?.previousTodos) {
         queryClient.setQueryData<ITodoItem[]>('todos', context.previousTodos);
       }
-    },
-    onSuccess: (data) => {
-      console.log('succ: ', data);
     },
     onSettled: () => {
       queryClient.invalidateQueries('todos');

@@ -1,12 +1,12 @@
 import { Box } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { useQuery } from 'react-query';
-import TodoItem, { ITodoItem } from './Item';
+import TodoItem from './Item';
+import { ITodoItem } from './types';
 
 const getTodos = async () => {
   const response = await fetch('https://jsonplaceholder.typicode.com/todos');
   const data = await response.json();
-  console.log(data);
   return data.slice(0, 10);
 };
 
@@ -26,7 +26,7 @@ const List: React.FC = () => {
     return (
       <p>
         `An error has occurred: $
-        {(error as any).message}
+        {error.message}
         `
       </p>
     );
