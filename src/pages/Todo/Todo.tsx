@@ -1,33 +1,48 @@
 // import { useQuery } from 'react-query';
 
-import { Container, Grid, Paper } from '@material-ui/core';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import {
+  Container, Grid, Hidden, Paper, Box, Divider,
+} from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import TodoForm from './Form';
+import TodoList from './List';
 
-// const getTodos = async () => {
-//   const response = await fetch('/todos');
-//   const data = await response.json();
-//   return data;
-// };
-
-const useStyles = makeStyles(() => createStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
   container: {
     minHeight: '720px',
     padding: '20px',
+  },
+  box: {
+    padding: 20,
+  },
+  divider: {
+    margin: theme.spacing(2, 0),
   },
 }));
 
 const Todo: React.FC = () => {
   const classes = useStyles();
-  // const { data } = useQuery('todos', getTodos);
+  console.log('ssss');
   return (
-    <Container>
+    <>
       <h1>Test</h1>
       <Paper>
-        <Grid className={classes.container}>
-          test
+        <Grid container>
+          <Grid item md={6} xs={12}>
+            <Box className={classes.box}>
+              <TodoForm />
+              <Divider className={classes.divider} />
+              <TodoList />
+            </Box>
+          </Grid>
+          <Hidden smDown>
+            <Grid item md={6}>
+              y
+            </Grid>
+          </Hidden>
         </Grid>
       </Paper>
-    </Container>
+    </>
   );
 };
 
