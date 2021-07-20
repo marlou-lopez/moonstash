@@ -43,7 +43,7 @@ const themeObject = {
       main: '#C8703E',
       dark: '#A4592F',
     },
-    type: 'light',
+    type: localStorage.getItem('app.theme') || 'light',
   },
 };
 
@@ -54,14 +54,18 @@ const useDarkMode = () => {
   const {
     palette: { type },
   } = theme;
+
+  const appTheme = type === 'light' ? 'dark' : 'light';
   const toggleDarkMode = () => {
     const updatedTheme = {
       ...theme,
       palette: {
         ...theme.palette,
-        type: type === 'light' ? 'dark' : 'light',
+        type: appTheme,
       },
     };
+
+    localStorage.setItem('app.theme', appTheme);
     setTheme(updatedTheme);
   };
   return [theme, toggleDarkMode];
