@@ -47,12 +47,10 @@ const Form: React.FC = () => {
   });
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-    // console.log('value: ', event.target.value);
   };
 
   const textAreaOnEnter = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' && !event.shiftKey) {
-      // onSubmit(e);
       if (value === '') return;
       mutate({
         id: getRandomInt(),

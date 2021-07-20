@@ -47,7 +47,6 @@ const List: React.FC = () => {
   return (
     <Box className={classes.list}>
       {data?.map((item) => (
-        // eslint-disable-next-line react/jsx-props-no-spreading
         <TodoItem {...item} key={item.id} />
       ))}
     </Box>

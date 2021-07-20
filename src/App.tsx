@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {
-  BrowserRouter, Switch, Route, RouteComponentProps,
+  BrowserRouter, Switch, Route,
 } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -71,7 +71,6 @@ const App: React.FC = () => {
   const classes = useStyles();
   const [theme, toggleDarkMode] = useDarkMode();
   const themeConfig = createTheme(theme);
-  console.log(themeConfig);
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>

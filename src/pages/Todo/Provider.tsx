@@ -1,16 +1,8 @@
 import React from 'react';
-import { ITodoItem } from './types';
+import {
+  Action, Dispatch, State, TodoProviderProps,
+} from './types';
 
-type Action = { type: 'select', payload: ITodoItem }
-| { type: 'unselect' }
-| { type: 'open' }
-| { type: 'close' };
-type Dispatch = (action: Action) => void;
-type State = {
-  selectedTodo: ITodoItem | null;
-  openModal: boolean;
-};
-type TodoProviderProps = { children: React.ReactNode };
 const TodoStateContext = React.createContext<
 { state: State; dispatch: Dispatch } | undefined
 >(undefined);
@@ -55,8 +47,7 @@ function TodoProvider({ children }: TodoProviderProps): JSX.Element {
     selectedTodo: null,
     openModal: false,
   });
-  // NOTE: you *might* need to memoize this value
-  // Learn more in http://kcd.im/optimize-context
+
   const value = { state, dispatch };
   return <TodoStateContext.Provider value={value}>{children}</TodoStateContext.Provider>;
 }

@@ -1,4 +1,4 @@
-import { Paper, Grid, useMediaQuery } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useTodo } from './Provider';

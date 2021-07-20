@@ -1,17 +1,16 @@
 // import { useQuery } from 'react-query';
 
 import {
-  Container, Grid, Hidden, Paper, Box, Divider, Modal, Fade, useMediaQuery,
+  Grid, Hidden, Paper, Box, Divider, Modal, Fade, useMediaQuery,
 } from '@material-ui/core';
 import {
-  createStyles, makeStyles, Theme, useTheme,
+  createStyles, makeStyles, Theme,
 } from '@material-ui/core/styles';
-import { useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import TodoForm from './Form';
 import TodoList from './List';
 import Preview from './Preview';
-import { TodoProvider, useTodo } from './Provider';
+import { useTodo } from './Provider';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   container: {
@@ -49,7 +48,6 @@ const Todo:React.FC<RouteComponentProps> = () => {
       type: 'unselect',
     });
   };
-  console.log('modal: ', isMedScreen && state.openModal);
 
   return (
     <>
