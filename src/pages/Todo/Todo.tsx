@@ -1,33 +1,85 @@
 // import { useQuery } from 'react-query';
 
-import { Container, Grid, Paper } from '@material-ui/core';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import {
+  Grid, Hidden, Paper, Box, Divider, Modal, Fade, useMediaQuery,
+} from '@material-ui/core';
+import {
+  createStyles, makeStyles, Theme,
+} from '@material-ui/core/styles';
+import { RouteComponentProps } from 'react-router';
+import TodoForm from './Form';
+import TodoList from './List';
+import Preview from './Preview';
+import { useTodo } from './Provider';
 
-// const getTodos = async () => {
-//   const response = await fetch('/todos');
-//   const data = await response.json();
-//   return data;
-// };
-
-const useStyles = makeStyles(() => createStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
   container: {
     minHeight: '720px',
     padding: '20px',
   },
+  box: {
+    padding: 20,
+  },
+  divider: {
+    margin: theme.spacing(2, 0),
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    width: '500px',
+    minHeight: '600px',
+    margin: theme.spacing(0, 2),
+  },
 }));
 
-const Todo: React.FC = () => {
+const Todo:React.FC<RouteComponentProps> = () => {
   const classes = useStyles();
-  // const { data } = useQuery('todos', getTodos);
+  const { state, dispatch } = useTodo();
+  const isMedScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+
+  const handleCloseModal = () => {
+    dispatch({
+      type: 'close',
+    });
+    dispatch({
+      type: 'unselect',
+    });
+  };
+
   return (
-    <Container>
+    <>
       <h1>Test</h1>
-      <Paper>
-        <Grid className={classes.container}>
-          test
+      <Paper className={classes.container}>
+        <Grid container>
+          <Grid item md={6} xs={12}>
+            <Box className={classes.box}>
+              <TodoForm />
+              <Divider className={classes.divider} />
+              <TodoList />
+            </Box>
+          </Grid>
+          <Hidden smDown>
+            <Grid item md={6}>
+              <Preview />
+            </Grid>
+          </Hidden>
+          <Modal
+            open={isMedScreen && state.openModal}
+            onClose={handleCloseModal}
+            className={classes.modal}
+          >
+            <Fade in={isMedScreen && state.openModal}>
+              <Paper className={classes.paper}>
+                <Preview />
+              </Paper>
+            </Fade>
+          </Modal>
         </Grid>
       </Paper>
-    </Container>
+    </>
   );
 };
 

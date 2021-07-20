@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter, Switch, Route,
+} from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import {
@@ -10,6 +12,7 @@ import { Container, CssBaseline } from '@material-ui/core';
 import Todo from './pages/Todo/Todo';
 import About from './pages/About/About';
 import Navigation from './components/Navigation';
+import { TodoProvider } from './pages/Todo/Provider';
 
 const queryClient = new QueryClient();
 
@@ -48,7 +51,6 @@ const useDarkMode = () => {
   // TODO: add typing
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [theme, setTheme] = useState<any>(themeObject);
-
   const {
     palette: { type },
   } = theme;
@@ -79,7 +81,15 @@ const App: React.FC = () => {
             <Container maxWidth="xl" className={classes.content}>
               <div className={classes.toolbar} />
               <Switch>
-                <Route exact path="/todo" component={Todo} />
+                <Route
+                  exact
+                  path="/todo"
+                  render={(props) => (
+                    <TodoProvider>
+                      <Todo {...props} />
+                    </TodoProvider>
+                  )}
+                />
                 <Route exact path="/about" component={About} />
                 <Route path="/">
                   <h1>Home</h1>
