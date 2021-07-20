@@ -7,6 +7,7 @@ import {
   createStyles, makeStyles, Theme, useTheme,
 } from '@material-ui/core/styles';
 import { useState } from 'react';
+import { RouteComponentProps } from 'react-router';
 import TodoForm from './Form';
 import TodoList from './List';
 import Preview from './Preview';
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 
-const Todo: React.FC = () => {
+const Todo:React.FC<RouteComponentProps> = () => {
   const classes = useStyles();
   const { state, dispatch } = useTodo();
   const isMedScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
@@ -53,7 +54,7 @@ const Todo: React.FC = () => {
   return (
     <>
       <h1>Test</h1>
-      <Paper>
+      <Paper className={classes.container}>
         <Grid container>
           <Grid item md={6} xs={12}>
             <Box className={classes.box}>

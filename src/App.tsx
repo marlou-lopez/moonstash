@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter, Switch, Route, RouteComponentProps,
+} from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import {
@@ -80,9 +82,15 @@ const App: React.FC = () => {
             <Container maxWidth="xl" className={classes.content}>
               <div className={classes.toolbar} />
               <Switch>
-                <TodoProvider>
-                  <Route exact path="/todo" component={Todo} />
-                </TodoProvider>
+                <Route
+                  exact
+                  path="/todo"
+                  render={(props) => (
+                    <TodoProvider>
+                      <Todo {...props} />
+                    </TodoProvider>
+                  )}
+                />
                 <Route exact path="/about" component={About} />
                 <Route path="/">
                   <h1>Home</h1>

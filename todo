@@ -1,0 +1,12 @@
+
+- Cleanup
+- Preview
+  - design layout
+  - figure out if we're using an getById service or local state
+- Context
+  - figure out if we're isolating the modal state
+  - 
+- Drag and Drop
+- List
+  - scrollable @done
+
